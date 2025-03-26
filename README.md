@@ -21,7 +21,7 @@ GAIDP Fin Buddy is a financial assistant application designed to help businesses
 
 ## 🎥 Demo
 🔗 [Live Demo](http://localhost:5000/)  
-📹 [Video Demo](./demo/video-demo.mp4)  
+📹 [Video Demo](.artifacts/demo/fin-buddy-demo - Made with Clipchamp.mp4)  
 
 ## 💡 Inspiration
 The inspiration for GAIDP Fin Buddy came from the need to help businesses and individuals stay compliant with regulatory guidelines. Understanding and mitigating risks associated with regulatory compliance can be challenging, and this application aims to simplify the process by providing actionable insights and automated analysis.
