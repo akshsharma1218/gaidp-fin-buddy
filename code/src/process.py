@@ -25,67 +25,81 @@ logging.getLogger('pdfminer').setLevel(logging.ERROR)
 nltk.download('punkt')
 nltk.download('stopwords')
 
+# Ensure the Logs directory and log file exist
+log_dir = 'Logs'
+log_file = os.path.join(log_dir, 'process.log')
+os.makedirs(log_dir, exist_ok=True)
+if not os.path.exists(log_file):
+    with open(log_file, 'w', encoding='utf-8') as f:  # Use UTF-8 encoding
+        pass  # Create an empty log file
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='process.log',
-    filemode='w'
+    filename=os.path.join('Logs', 'process.log'),
+    filemode='w',
+    encoding='utf-8'  # Use UTF-8 encoding
 )
+
+# Add this line to remove ANSI escape sequences from logs
+logging.getLogger().handlers[0].addFilter(lambda record: setattr(record, 'msg', re.sub(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', '', record.msg)) or True)
 
 # Initialize Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-pro')
 
-class FR2052aProcessor:
+class Processor:
     def __init__(self):
+        self.batch_size = 20
+        self.max_retries = 3
+        self.retry_delay = 60
         self.json_encoder = json.JSONEncoder(default=self._json_serializer)
         self.index_pattern = re.compile(r"(?i)(SCHEDULE|SECTION)\s+([A-Z0-9—-]+)\s*\.{3,}\s*(\d+)")
         self.gemini_prompt = """
         [IMPORTANT INSTRUCTIONS]
-        1. Return COMPLETE JSON without truncation ({format})
-        2. Ensure all rules are fully specified
-        3. Include all allowed values/conditions directly in the response
-        
-        Extract ALL data profiling rules for {schedule_name} from the text below. These rules will be used for adaptive risk scoring of transactional data and providing remediation.
-        The structure of the input dataset will closely resemble the structure of tables in the text, if tables are present.
+        1. Return the COMPLETE JSON response without truncation in the specified format ({format}).
+        2. Ensure all rules are fully specified, specially those derived from tables.
+        3. If the input contains a table with fields such as "Field No.", "Field Name", "Description", or "Allowable Values", there must be a rule for each field from the table.
+        4. Include all allowed values, conditions, and constraints directly in the response.
+
+        Extract ALL data profiling rules for {schedule_name} from the text below. These rules will be used for adaptive risk scoring of transactional data and providing remediation. The structure of the input dataset will closely resemble the structure of tables in the text, if tables are present.
 
         {text}
 
-        Return complete JSON without truncation. For each rule, provide the following details:
+        Return the JSON response in the following structure, ensuring completeness for each rule:
 
-        - field: The field name (exactly as it appears in tables if present)
-        - required: True or False (default False)
-        - description: A complete, self-contained description including:
-            - Expected data type and format specifications
-            - All valid values or value ranges
-            - Complete reference to any related fields or tables
-            - Full conditional logic if applicable
-            - Any business rules or validation requirements
-        - constraint_type: One of:
-            - "format": Include the complete format specification
-            - "value": Include all allowed values
-            - "range": Include complete min/max values
-            - "reference": Include full reference details
-            - "conditional": Include complete conditional logic
-        - allowed_values: 
-            - For "value": Complete list of allowed values
-            - For "format": Full format specification (regex if available)
-            - For "range": Complete min/max values (use null if unbounded)
-            - For "reference": Full reference details including:
-                - Referenced field/table name
-                - Exact matching requirements
-                - Complete relationship description
-            - For "conditional": Complete conditional logic including:
-                - All fields involved
-                - Full logical expression
-                - Expected outcomes
-        - severity: One of "critical", "high", "medium", or "low"
-        - dependencies: [List of field names this rule depends on]
-        - source: One-line summary of the source text (for traceability only)
+        - **field**: The field name (exactly as it appears in tables, if present).
+        - **required**: True or False (default is False).
+        - **description**: A detailed description including:
+            - Expected data type and format specifications.
+            - All valid values or value ranges.
+            - References to any related fields or tables.
+            - Full conditional logic, if applicable.
+            - Any business rules or validation requirements.
+        - **constraint_type**: One of the following:
+            - "format": Include the complete format specification (e.g., regex).
+            - "value": Include all allowed values.
+            - "range": Include complete min/max values.
+            - "reference": Include full reference details.
+            - "conditional": Include complete conditional logic.
+        - **allowed_values**:
+            - For "value": Provide a complete list of allowed values.
+            - For "format": Provide the full format specification (e.g., regex).
+            - For "range": Provide the complete min/max values (use null if unbounded).
+            - For "reference": Provide full reference details, including:
+                - Referenced field/table name.
+                - Exact matching requirements.
+                - Complete relationship description.
+            - For "conditional": Provide complete conditional logic, including:
+                - All fields involved.
+                - Full logical expression.
+                - Expected outcomes.
+        - **severity**: One of "critical", "high", "medium", or "low".
+        - **dependencies**: A list of field names this rule depends on.
+        - **source**: A one-line summary of the source text for traceability.
+
+        Ensure the response is well-structured, comprehensive, and adheres to the above format.
         """
-        self.batch_size = 5
-        self.max_retries = 3
-        self.retry_delay = 30  # seconds
 
     def _call_gemini_with_retry(self, prompt: str) -> str:
         """Call Gemini API with retry logic"""
@@ -111,15 +125,15 @@ class FR2052aProcessor:
     def _save_prompt_response(self, prompt: str, response: str, prefix: str = "") -> None:
         """Save prompt and response to files"""
         timestamp = int(time.time())
-        os.makedirs("gemini_logs", exist_ok=True)
+        os.makedirs("Logs/gemini_logs", exist_ok=True)
         
-        prompt_file = f"gemini_logs/{prefix}prompt_{timestamp}.txt"
-        response_file = f"gemini_logs/{prefix}response_{timestamp}.txt"
+        prompt_file = f"Logs/gemini_logs/{prefix}prompt_{timestamp}.txt"
+        response_file = f"Logs/gemini_logs/{prefix}response_{timestamp}.txt"
         
-        with open(prompt_file, 'w', encoding='utf-8') as f:
+        with open(prompt_file, 'w', encoding='utf-8') as f:  # Use UTF-8 encoding
             f.write(prompt)
         
-        with open(response_file, 'w', encoding='utf-8') as f:
+        with open(response_file, 'w', encoding='utf-8') as f:  # Use UTF-8 encoding
             f.write(response)
 
 
@@ -134,6 +148,7 @@ class FR2052aProcessor:
             
             self._save_prompt_response(prompt, "", "rule_gen_")
             response_text = self._call_gemini_with_retry(prompt)
+            time.sleep(50)
             self._save_prompt_response(prompt, response_text, "rule_gen_")
             
             json_str = self._extract_json(response_text)
@@ -156,9 +171,9 @@ class FR2052aProcessor:
             logging.error(f"Rule extraction failed: {e}")
             return []
 
-    def process_schedule(self, target_schedule: str) -> Dict:
+    def process_schedule(self, pdf_path: str, target_schedule: str) -> Dict:
         """Extract rules from PDF schedule with retry logic"""
-        pdf_path = "guidelines_tran.pdf"
+        pdf_path = pdf_path
         try:
             with pdfplumber.open(pdf_path) as pdf:
                 page_range = self._get_schedule_pages(pdf, target_schedule)
@@ -228,11 +243,13 @@ class FR2052aProcessor:
                         prompt
                     )
                     self._save_prompt_response(prompt, batch_response, f"batch_{batch_start}")
+                    # print("local_results ", local_results)
                     final_results = self._validate_batch_with_gemini(
                         local_results, 
                         rules,
                         batch_response
                     )
+                    # print("final_results", final_results[0])
                 except Exception as e:
                     logging.error(f"Batch validation failed: {e}")
                     final_results = local_results
@@ -253,7 +270,7 @@ class FR2052aProcessor:
                         default=self._json_serializer
                     ) if anomalies else None
                     df.at[idx, 'warning_flags'] = result.get('warning_flags', 0)
-                    
+                    # logging.info(f"Batch {batch_start}-{batch_end} processed: {df.head().to_json(orient='records', lines=True)}")
             return df
             
         except Exception as e:
@@ -491,22 +508,27 @@ class FR2052aProcessor:
         return violations
 
     def _calculate_risk_score(self, missing_fields: List[str], violations: List[Dict], anomalies: List[Dict]) -> int:
-        """Calculate risk score locally"""
-        score = len(missing_fields) * 3  # Missing fields are critical
-        
-        severity_weights = {
-            'critical': 3,
-            'high': 2,
-            'medium': 1,
-            'low': 0.5
-        }
-        
-        for violation in violations:
-            score += severity_weights.get(violation.get('severity', 'medium'), 1)
+        """Calculate risk score locally with fallback for NaN"""
+        try:
+            score = len(missing_fields) * 3  # Missing fields are critical
             
-        score += len(anomalies) * 2  # Anomalies are weighted higher
-        
-        return min(100, int(score))
+            severity_weights = {
+                'critical': 3,
+                'high': 2,
+                'medium': 1,
+                'low': 0.5
+            }
+            
+            for violation in violations:
+                score += severity_weights.get(violation.get('severity', 'medium'), 1)
+                
+            score += len(anomalies) * 2  # Anomalies are weighted higher
+            
+            # Ensure score is within valid bounds
+            return min(100, max(0, int(score)))
+        except Exception as e:
+            logging.error(f"Error calculating risk score: {e}")
+            return 0  # Default to 0 in case of error
 
     def _detect_anomalies(self, transaction: Dict, rules: List[Dict]) -> List[Dict]:
         """Detect numerical anomalies without API calls"""
@@ -586,24 +608,24 @@ def load_json(filename: str) -> Union[Dict, List]:
     return data
 
 if __name__ == "__main__":
-    processor = FR2052aProcessor()
+    processor = Processor()
     
     # Step 1: Extract rules with retry logic
     logging.info("Extracting rules from PDF...")
     
-    # results = processor.process_schedule("B—Securities")
-    # if results and results['rules']:
-    #     save_json(results['rules'], "extracted_rules.json")
-    #     logging.info(f"Extracted {len(results['rules'])} rules")
-    # else:
-    #     logging.error("Failed to extract rules")
-    #     exit(1)
-    results = {}
-    results["rules"] = load_json("extracted_rules.json")
+    results = processor.process_schedule("guidelines_tran.pdf", "B—Securities")
+    if results and results['rules']:
+        save_json(results['rules'], "extracted_rules.json")
+        logging.info(f"Extracted {len(results['rules'])} rules from f{results["pages"]}")
+    else:
+        logging.error("Failed to extract rules")
+        exit(1)
+    # results = {}
+    # results["rules"] = load_json("extracted_rules.json")
     # Step 2: Load transactions
     logging.info("Loading transactions...")
     try:
-        transactions = pd.read_csv("transaction.csv").head(5).to_dict(orient="records")
+        transactions = pd.read_csv("transaction.csv").head(500).to_dict(orient="records")
         logging.info(f"Loaded {len(transactions)} transactions")
     except Exception as e:
         logging.error(f"Failed to load transactions: {e}")
