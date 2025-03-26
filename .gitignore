@@ -2,7 +2,6 @@ gemini_logs/
 deepseek/
 *__pycache*
 *.json
-keys.py
 *.xlsx
 Logs/
 uploads/

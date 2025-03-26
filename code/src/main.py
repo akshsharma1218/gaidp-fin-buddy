@@ -25,7 +25,7 @@ logging.basicConfig(
 logging.getLogger().handlers[0].addFilter(lambda record: setattr(record, 'msg', re.sub(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', '', record.msg)) or True)
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = os.path.abspath('uploads')  # Convert to absolute path
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 processor = Processor()
@@ -66,7 +66,7 @@ def upload():
             return "Error: Failed to extract rules or schedule not found.", 400
 
         logging.info("Loading transactions.")
-        transactions = pd.read_csv(transaction_path).head(50).to_dict(orient="records")
+        transactions = pd.read_csv(transaction_path).to_dict(orient="records")
         logging.info(f"Loaded {len(transactions)} transactions.")
 
         logging.info("Analyzing transactions.")
