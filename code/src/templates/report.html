@@ -104,7 +104,7 @@
                                     class="btn btn-warning" 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#detailsModal" 
-                                    onclick="showDetails('{{ transaction.remediation | tojson }}', '{{ transaction.violations | tojson }}', '{{ transaction.anomalies | tojson }}')">
+                                    onclick="showDetails('{{ transaction | tojson | safe | urlencode }}')">
                                     View
                                 </button>
                             </td>
@@ -140,10 +140,28 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function showDetails(remediation, violations, anomalies) {
-            document.getElementById('remediationContent').innerText = remediation || 'N/A';
-            document.getElementById('violationsContent').innerText = violations || 'N/A';
-            document.getElementById('anomaliesContent').innerText = anomalies || 'N/A';
+        function showDetails(transactionData) {
+            try {
+                // Replace NaN with 0 in the JSON string
+                const sanitizedData = decodeURIComponent(transactionData).replace(/\bNaN\b/g, '0');
+                const transaction = JSON.parse(sanitizedData);
+
+                const remediationContent = transaction.remediation || 'N/A';
+                const violationsContent = transaction.violations || 'N/A';
+                const anomaliesContent = transaction.anomalies || 'N/A';
+
+                document.getElementById('remediationContent').innerText = typeof remediationContent === 'object' 
+                    ? JSON.stringify(remediationContent, null, 2) 
+                    : remediationContent;
+                document.getElementById('violationsContent').innerText = typeof violationsContent === 'object' 
+                    ? JSON.stringify(violationsContent, null, 2) 
+                    : violationsContent;
+                document.getElementById('anomaliesContent').innerText = typeof anomaliesContent === 'object' 
+                    ? JSON.stringify(anomaliesContent, null, 2) 
+                    : anomaliesContent;
+            } catch (error) {
+                console.error('Error parsing JSON data:', error);
+            }
         }
     </script>
 </body>

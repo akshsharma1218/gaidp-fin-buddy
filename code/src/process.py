@@ -249,7 +249,7 @@ class Processor:
                         rules,
                         batch_response
                     )
-                    # print("final_results", final_results)
+                    # print("final_results", final_results[0])
                 except Exception as e:
                     logging.error(f"Batch validation failed: {e}")
                     final_results = local_results
@@ -270,7 +270,7 @@ class Processor:
                         default=self._json_serializer
                     ) if anomalies else None
                     df.at[idx, 'warning_flags'] = result.get('warning_flags', 0)
-                    print(df.head())
+                    # logging.info(f"Batch {batch_start}-{batch_end} processed: {df.head().to_json(orient='records', lines=True)}")
             return df
             
         except Exception as e:

@@ -66,7 +66,7 @@ def upload():
             return "Error: Failed to extract rules or schedule not found.", 400
 
         logging.info("Loading transactions.")
-        transactions = pd.read_csv(transaction_path).head(15).to_dict(orient="records")
+        transactions = pd.read_csv(transaction_path).head(50).to_dict(orient="records")
         logging.info(f"Loaded {len(transactions)} transactions.")
 
         logging.info("Analyzing transactions.")
