@@ -1,0 +1,56 @@
+Unique ID,Identifier Type,Identifier Value,Private Placement,Security Description,Security Description 2,Security Description 3,Exposure to Debt/Equity Security (USD Equivalent),Risk Score
+SEC-0483,CUSIP,037833100,N,Common Stock (Equity),Apple Inc. Common Stock,NASDAQ:AAPL,Market Value (USD Equivalent): $2,457,832.19,12
+SEC-0192,ISIN,US0231351067,Y,Corporate Bond,Tesla Inc 5.3% 15/05/2030,Senior Unsecured,Amortized Cost (USD Equivalent): $1,750,000.00,34
+SEC-0376,INTERNAL,INT-MSFT-2024,Y,Corporate Bond,Microsoft Corp 4.95% 06/06/2032,,Original Face Value (USD Equivalent): $3,200,000.00,78
+SEC-0055,SEDOL,2000019,N,Municipal Bond,New York City Municipal Bonds Series 2024,AAA Rated,Current Face Value (USD Equivalent): $950,000.00,8
+SEC-1294,CUSIP,46625H100,N,US Treasuries & Agencies,US Treasury Note 3.875% 15/11/2033,,Amortized Cost (USD Equivalent): $5,000,000.00,3
+SEC-0422,ISIN,XS1988387210,Y,CLO,Barclays CLO 2019-1 Class B,,Market Value (USD Equivalent): $8,245,671.00,67
+SEC-0871,INTERNAL,INT-JPM-ABS-23,Y,Auto ABS,Chase Auto Loan Trust 2023-A,,Original Face Value (USD Equivalent): $12,500,000.00,89
+SEC-0318,Other Public Identifier,AMZN2025,N,Corporate Bond,Amazon.com Inc 4.05% 12/12/2025,Green Bond,Current Face Value (USD Equivalent): $2,800,000.00,28
+SEC-1562,,,N,Mutual Fund,Fidelity Contrafund,,Market Value (USD Equivalent): $1,200,000.00,45
+SEC-0089,CUSIP,38141G104,Y,Preferred Stock (Equity),Berkshire Hathaway Class B,,Market Value (USD Equivalent): $3,750,000.00,52
+SEC-1023,ISIN,US9128285M68,N,US Treasuries & Agencies,US Treasury Bill 0.125% 30/04/2025,,Amortized Cost (USD Equivalent): $10,000,000.00,1
+SEC-0754,SEDOL,BDGJP01,N,Foreign RMBS,Nomura RMBS Series 2021-2,Japan Residential,Original Face Value (USD Equivalent): $6,800,000.00,72
+SEC-0287,CUSIP,59156R108,N,Corporate Bond,Lockheed Martin 3.9% 15/03/2029,Defense Sector,Current Face Value (USD Equivalent): $1,500,000.00,23
+SEC-1392,ISIN,US40434L1092,Y,CDO,Goldman Sachs CDO 2020-2 Class C,,Market Value (USD Equivalent): $15,200,000.00,92
+SEC-0635,INTERNAL,INT-BAC-HEL,Y,Domestic Non-Agency RMBS (incl HEL ABS),Bank of America HELOC Trust 2018,,Original Face Value (USD Equivalent): $9,300,000.00,84
+SEC-1128,CUSIP,459200101,N,Common Stock (Equity),NVIDIA Corporation Common Stock,NASDAQ:NVDA,Market Value (USD Equivalent): $4,200,000.00,18
+SEC-0042,ISIN,US037833BX34,N,Corporate Bond,Apple Inc 2.85% 08/05/2031,,Amortized Cost (USD Equivalent): $3,500,000.00,15
+SEC-0915,SEDOL,BYX5H63,N,CMBS,Blackstone Commercial Mortgage Trust 2022-1,Class A,Current Face Value (USD Equivalent): $7,600,000.00,58
+SEC-0526,InvalidType,ABC!@#123,Y,Other,Test Security with Invalid ID Type,,Market Value (USD Equivalent): $500,000.00,95
+SEC-0249,CUSIP,02079K305,N,Corporate Bond,Alphabet Inc 4.65% 15/08/2032,Technology Sector,Original Face Value (USD Equivalent): $2,100,000.00,31
+SEC-1357,ISIN,US88160R1014,N,Common Stock (Equity),Tesla Inc Common Stock,NASDAQ:TSLA,Market Value (USD Equivalent): $3,800,000.00,42
+SEC-0713,INTERNAL,INT-WFC-ART,Y,Auction Rate Securities,Wells Fargo ARS Preferred 2008,,Amortized Cost (USD Equivalent): $5,700,000.00,88
+SEC-0164,SEDOL,2002303,N,Municipal Bond,California State GO Bonds 2025,AA+ Rated,Current Face Value (USD Equivalent): $2,900,000.00,7
+SEC-0972,CUSIP,617446448,N,Agency MBS,Fannie Mae Pool #MA4875,3.5% Coupon,Market Value (USD Equivalent): $4,500,000.00,26
+SEC-0438,ISIN,US67066G1040,N,Corporate Bond,Nike Inc 3.25% 01/11/2028,Consumer Goods,Original Face Value (USD Equivalent): $1,800,000.00,21
+SEC-1081,INTERNAL,INT-C-ABS,Y,Credit Card ABS,Citibank Credit Card Trust 2023-2,,Amortized Cost (USD Equivalent): $11,200,000.00,79
+SEC-0552,SEDOL,BFYNN59,N,Corporate Bond,Boeing Co 6.875% 30/08/2029,Ba1 Rated,Current Face Value (USD Equivalent): $3,200,000.00,63
+SEC-0327,CUSIP,46625HJK78,Y,Other,Private Tech Startup Convertible Note,Series B,Market Value (USD Equivalent): $1,250,000.00,68
+SEC-1239,ISIN,US92343V1044,N,Common Stock (Equity),Visa Inc Class A Common Stock,NYSE:V,Market Value (USD Equivalent): $2,100,000.00,14
+SEC-0826,INTERNAL,INT-MCD-2025,Y,Corporate Bond,McDonald's Corp 4.7% 21/03/2025,,Original Face Value (USD Equivalent): $1,700,000.00,57
+SEC-0098,SEDOL,BD9BHF7,N,Sovereign Bond,UK Gilt 4.5% 22/01/2035,,Amortized Cost (USD Equivalent): $6,500,000.00,5
+SEC-1473,CUSIP,126650100,N,Common Stock (Equity),Chevron Corporation Common Stock,NYSE:CVX,Market Value (USD Equivalent): $3,400,000.00,19
+SEC-0651,ISIN,US5949181045,N,Corporate Bond,Microsoft Corp 2.925% 06/02/2031,Technology,Current Face Value (USD Equivalent): $4,800,000.00,16
+SEC-1142,INTERNAL,INT-GS-SL,Y,Student Loan ABS,Discover Student Loan Trust 2021-3,,Original Face Value (USD Equivalent): $8,900,000.00,82
+SEC-0384,SEDOL,2005970,N,Municipal Bond,Chicago O'Hare Airport Revenue Bonds,BBB+ Rated,Market Value (USD Equivalent): $2,300,000.00,11
+SEC-1017,CUSIP,369604301,N,Corporate Bond,Johnson & Johnson 3.55% 01/12/2027,Healthcare,Amortized Cost (USD Equivalent): $3,700,000.00,13
+SEC-0265,ISIN,US0378331005,N,Common Stock (Equity),Apple Inc Common Stock,NASDAQ:AAPL,Market Value (USD Equivalent): $5,200,000.00,9
+SEC-0789,INTERNAL,INT-JNJ-2026,Y,Corporate Bond,Johnson & Johnson 5.1% 15/09/2026,,Current Face Value (USD Equivalent): $2,600,000.00,54
+SEC-0132,SEDOL,BD0DPY9,N,Foreign RMBS,Deutsche Pfandbriefbank AG RMBS,German Commercial,Original Face Value (USD Equivalent): $7,100,000.00,71
+SEC-1524,CUSIP,931142103,N,Common Stock (Equity),Walmart Inc Common Stock,NYSE:WMT,Market Value (USD Equivalent): $1,900,000.00,17
+SEC-0593,ISIN,US38259P5089,N,Corporate Bond,Google LLC 4.375% 28/04/2033,Technology,Amortized Cost (USD Equivalent): $4,300,000.00,22
+SEC-1056,INTERNAL,INT-BAC-CLO,Y,CLO,Bank of America CLO 2022-1 Class D,,Market Value (USD Equivalent): $13,800,000.00,91
+SEC-0419,SEDOL,2000019,N,Municipal Bond,New York City Municipal Bonds Series 2024,AAA Rated,Current Face Value (USD Equivalent): $950,000.00,8
+SEC-0938,CUSIP,46625H100,N,US Treasuries & Agencies,US Treasury Note 3.875% 15/11/2033,,Original Face Value (USD Equivalent): $5,000,000.00,3
+SEC-0221,ISIN,XS1988387210,Y,CLO,Barclays CLO 2019-1 Class B,,Amortized Cost (USD Equivalent): $8,245,671.00,67
+SEC-0864,INTERNAL,INT-JPM-ABS-23,Y,Auto ABS,Chase Auto Loan Trust 2023-A,,Market Value (USD Equivalent): $12,500,000.00,89
+SEC-0347,Other Public Identifier,AMZN2025,N,Corporate Bond,Amazon.com Inc 4.05% 12/12/2025,Green Bond,Current Face Value (USD Equivalent): $2,800,000.00,28
+SEC-1571,,,N,Mutual Fund,Fidelity Contrafund,,Original Face Value (USD Equivalent): $1,200,000.00,45
+SEC-0076,CUSIP,38141G104,Y,Preferred Stock (Equity),Berkshire Hathaway Class B,,Market Value (USD Equivalent): $3,750,000.00,52
+SEC-1038,ISIN,US9128285M68,N,US Treasuries & Agencies,US Treasury Bill 0.125% 30/04/2025,,Amortized Cost (USD Equivalent): $10,000,000.00,1
+SEC-0741,SEDOL,BDGJP01,N,Foreign RMBS,Nomura RMBS Series 2021-2,Japan Residential,Current Face Value (USD Equivalent): $6,800,000.00,72
+SEC-0294,CUSIP,59156R108,N,Corporate Bond,Lockheed Martin 3.9% 15/03/2029,Defense Sector,Original Face Value (USD Equivalent): $1,500,000.00,23
+SEC-1385,ISIN,US40434L1092,Y,CDO,Goldman Sachs CDO 2020-2 Class C,,Market Value (USD Equivalent): $15,200,000.00,92
+SEC-0628,INTERNAL,INT-BAC-HEL,Y,Domestic Non-Agency RMBS (incl HEL ABS),Bank of America HELOC Trust 2018,,Amortized Cost (USD Equivalent): $9,300,000.00,84
+SEC-1119,CUSIP,459200101,N,Common Stock (Equity),NVIDIA Corporation Common Stock,NASDAQ:NVDA,Current Face Value (USD Equivalent): $4,200,000.00,18

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"="width=device-width, initial-scale=1.0">
+    <title>Transaction Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        table {
+            table-layout: auto;
+            width: 175%; /* Increase table width */
+            word-wrap: break-word;
+        }
+        th, td {
+            vertical-align: top;
+            word-wrap: break-word;
+            text-align: center;
+        }
+        th {
+            text-align: center;
+        }
+        .short-column {
+            width: 10%;
+        }
+        .long-column {
+            width: 30%;
+        }
+        .table-responsive {
+            overflow-x: scroll; /* Enable horizontal scrolling */
+            direction: ltr; /* Make it left-scrollable */
+        }
+        .table-responsive table {
+            direction: ltr; /* Keep table content left-to-right */
+        }
+        .btn-remediation {
+            background-color: green;
+            color: white;
+        }
+        .btn-violation {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-3 m-3">
+        <div class="container-fluid mt-5 mx-1">
+            <h1>Analysis Report</h1>
+            <div class="mb-3">
+                <a href="/download/extracted_rules.json" class="btn btn-info">Download Extracted Rules</a>
+                <a href="/download/analysis_report.json" class="btn btn-success">Download Analysis Report</a>
+                <a href="/download/analysis_report.xlsx" class="btn btn-warning">Download Excel</a>
+            </div>
+            <h2>Extracted Rules</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="short-column">Field</th>
+                            <th class="short-column">Required</th>
+                            <th class="long-column">Description</th>
+                            <th class="short-column">Constraint Type</th>
+                            <th class="long-column">Allowed Values</th>
+                            <th class="short-column">Severity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rule in rules %}
+                        <tr>
+                            <td>{{ rule.field }}</td>
+                            <td>{{ rule.required }}</td>
+                            <td>{{ rule.description }}</td>
+                            <td>{{ rule.constraint_type }}</td>
+                            <td>{{ rule.allowed_values }}</td>
+                            <td>{{ rule.severity }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <h2>Transactions</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            {% for key in transactions[0].keys() %}
+                            {% if key != 'remediation' and key != 'violations' and key != 'anomalies' %}
+                            <th>{{ key }}</th>
+                            {% endif %}
+                            {% endfor %}
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                        <tr>
+                            {% for key, value in transaction.items() %}
+                            {% if key != 'remediation' and key != 'violations' and key != 'anomalies' %}
+                            <td>{{ value }}</td>
+                            {% endif %}
+                            {% endfor %}
+                            <td>
+                                <button 
+                                    class="btn btn-warning" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#detailsModal" 
+                                    onclick="showDetails('{{ transaction.remediation | tojson }}', '{{ transaction.violations | tojson }}', '{{ transaction.anomalies | tojson }}')">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Transaction Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="detailsContent">
+                    <h6>Remediation</h6>
+                    <p id="remediationContent"></p>
+                    <h6>Violations</h6>
+                    <p id="violationsContent"></p>
+                    <h6>Anomalies</h6>
+                    <p id="anomaliesContent"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showDetails(remediation, violations, anomalies) {
+            document.getElementById('remediationContent').innerText = remediation || 'N/A';
+            document.getElementById('violationsContent').innerText = violations || 'N/A';
+            document.getElementById('anomaliesContent').innerText = anomalies || 'N/A';
+        }
+    </script>
+</body>
+</html>
