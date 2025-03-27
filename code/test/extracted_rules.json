@@ -1,0 +1,304 @@
+[
+    {
+        "field": "Unique ID",
+        "required": true,
+        "description": "A unique identifier must be included to identify each unique record. For a given security position, the same Unique ID should be used from one period to the next.",
+        "constraint_type": "format",
+        "allowed_values": "^[a-zA-Z0-9-_]+$",
+        "severity": "critical",
+        "dependencies": [],
+        "source": "A unique identifier must be included to identify each unique record for each of the sub-schedules B.1 and B.2"
+    },
+    {
+        "field": "Identifier Type",
+        "required": true,
+        "description": "Report the identifier type. If a valid CUSIP, ISIN or SEDOL identifier exists for the security, please report the value of the chosen identifier (the CUSIP, ISIN, or SEDOL code) and indicate the identifier type as \u201cCUSIP\u201d, \u201cISIN\u201d, or \u201cSEDOL\u201d. If a CUSIP, ISIN, or SEDOL identifier is not available for a given security, please report an alternative public identifier value, if available, and report the identifier type. If only an internal identifier is available and provided, please report the identifier type as \u201cINTERNAL.\u201d",
+        "constraint_type": "value",
+        "allowed_values": [
+            "CUSIP",
+            "ISIN",
+            "SEDOL",
+            "INTERNAL",
+            "Other Public Identifier"
+        ],
+        "severity": "critical",
+        "dependencies": [],
+        "source": "Report individual security-level data for all available-for-sale (AFS) and held-to-maturity (HTM) securities"
+    },
+    {
+        "field": "Identifier Value",
+        "required": true,
+        "description": "Report the value of the chosen identifier. If a CUSIP, ISIN, or SEDOL identifier is not available for a given security, please report an alternative public identifier value, if available. If only an internal identifier is available and provided, please report the identifier type as \u201cINTERNAL.\u201d",
+        "constraint_type": "conditional",
+        "allowed_values": {
+            "fields": [
+                "Identifier Type"
+            ],
+            "logic": "If Identifier Type is CUSIP, ISIN, or SEDOL, then Identifier Value must be a valid CUSIP, ISIN, or SEDOL code. If Identifier Type is INTERNAL, then Identifier Value must be a valid internal identifier. If Identifier Type is Other Public Identifier, then Identifier Value must be a valid public identifier.",
+            "outcomes": [
+                "Valid CUSIP/ISIN/SEDOL",
+                "Valid Internal Identifier",
+                "Valid Other Public Identifier"
+            ]
+        },
+        "severity": "critical",
+        "dependencies": [
+            "Identifier Type"
+        ],
+        "source": "Report individual security-level data for all available-for-sale (AFS) and held-to-maturity (HTM) securities"
+    },
+    {
+        "field": "Private Placement",
+        "required": true,
+        "description": "Please enter \u201cY\u201d if the security is a private placement security or other non-publicly offered security or \u201cN\u201d if it is a publicly offered security. For clarity, please enter \"Y\" for Rule 144A securities and direct purchase municipal securities.",
+        "constraint_type": "value",
+        "allowed_values": [
+            "Y",
+            "N"
+        ],
+        "severity": "critical",
+        "dependencies": [],
+        "source": "Please enter \u201cY\u201d if the security is a private placement security or other non-publicly offered security or \u201cN\u201d if it is a publicly offered security."
+    },
+    {
+        "field": "Security Description",
+        "required": true,
+        "description": "Report the security description as indicated in the provided list of allowed values.",
+        "constraint_type": "value",
+        "allowed_values": [
+            "Agency MBS",
+            "Auction Rate Securities",
+            "CDO",
+            "CLO",
+            "CMBS",
+            "Common Stock (Equity)",
+            "Auto ABS",
+            "Credit Card ABS",
+            "Student Loan ABS",
+            "Other ABS (excl HEL ABS)",
+            "Corporate Bond",
+            "Covered Bond",
+            "Domestic Non-Agency RMBS (incl HEL ABS)",
+            "Foreign RMBS",
+            "Municipal Bond",
+            "Mutual Fund",
+            "Preferred Stock (Equity)",
+            "Sovereign Bond",
+            "US Treasuries & Agencies",
+            "Other"
+        ],
+        "severity": "critical",
+        "dependencies": [],
+        "source": "Report the security description as indicated below."
+    },
+    {
+        "field": "Security Description 2",
+        "required": false,
+        "description": "Provides additional details based on Security Description 1. See the detailed instructions for each Security Description 1 value.",
+        "constraint_type": "conditional",
+        "allowed_values": {
+            "fields": [
+                "Security Description"
+            ],
+            "logic": "See detailed instructions for each Security Description 1 value.",
+            "outcomes": []
+        },
+        "severity": "medium",
+        "dependencies": [
+            "Security Description"
+        ],
+        "source": "Report the security description as indicated below."
+    },
+    {
+        "field": "Security Description 3",
+        "required": false,
+        "description": "Provides further details based on Security Description 1. See detailed instructions.",
+        "constraint_type": "conditional",
+        "allowed_values": {
+            "fields": [
+                "Security Description"
+            ],
+            "logic": "See detailed instructions for each Security Description 1 value.",
+            "outcomes": []
+        },
+        "severity": "medium",
+        "dependencies": [
+            "Security Description"
+        ],
+        "source": "Report the security description as indicated below."
+    },
+    {
+        "field": "Exposure to Debt/Equity Security (USD Equivalent)",
+        "required": true,
+        "description": "Report exposure to the debt/equity security. Must be a numeric value in USD.",
+        "constraint_type": "range",
+        "allowed_values": {
+            "min": 0,
+            "max": null
+        },
+        "severity": "critical",
+        "dependencies": [],
+        "source": "Report exposure to the debt/equity security as indicated below."
+    },
+    {
+        "field": "Amortized Cost (USD Equivalent)",
+        "required": false,
+        "description": "In general, amortized cost is the purchase price of a debt security adjusted for amortization of premium or accretion of discount if the debt security was purchased at other than par or face value.",
+        "constraint_type": "range",
+        "allowed_values": {
+            "min": 0,
+            "max": null
+        },
+        "severity": "medium",
+        "dependencies": [],
+        "source": "In general, amortized cost is the purchase price of a debt security adjusted for amortization of premium or accretion of discount if the debt security was purchased at other than par or face value."
+    },
+    {
+        "field": "Market Value (USD Equivalent)",
+        "required": true,
+        "description": "In general, market value is \u201cthe price that would be received to sell an asset or paid to transfer a liability in an orderly transaction between market participants at the measurement date.\u201d",
+        "constraint_type": "range",
+        "allowed_values": {
+            "min": 0,
+            "max": null
+        },
+        "severity": "critical",
+        "dependencies": [],
+        "source": "In general, market value is \u201cthe price that would be received to sell an asset or paid to transfer a liability in an orderly transaction between market participants at the measurement date.\u201d"
+    },
+    {
+        "field": "Current Face Value (USD Equivalent)",
+        "required": true,
+        "description": "The nominal dollar amount of the security as of the report date.",
+        "constraint_type": "range",
+        "allowed_values": {
+            "min": 0,
+            "max": null
+        },
+        "severity": "critical",
+        "dependencies": [],
+        "source": "The nominal dollar amount of the security as of the report date."
+    },
+    {
+        "field": "Original Face Value (USD Equivalent)",
+        "required": true,
+        "description": "The nominal dollar amount originally assigned to the security by the issuer.",
+        "constraint_type": "range",
+        "allowed_values": {
+            "min": 0,
+            "max": null
+        },
+        "severity": "critical",
+        "dependencies": [],
+        "source": "The nominal dollar amount originally assigned to the security by the issuer."
+    },
+    {
+        "field": "OTTI Taken",
+        "required": false,
+        "description": "Report the cumulative amount of other-than-temporary impairments (OTTI) recognized in earnings in the calendar year to date by the BHC or IHC or SLHC on the security. Institutions that have adopted ASU 2016-13 do not report OTTI taken, but must report the Amount of Allowance for Credit Losses and Writeoffs.",
+        "constraint_type": "range",
+        "allowed_values": {
+            "min": 0,
+            "max": null
+        },
+        "severity": "medium",
+        "dependencies": [],
+        "source": "Report the cumulative amount of other-than-temporary impairments (OTTI) recognized in earnings in the calendar year to date by the BHC or IHC or SLHC on the security."
+    },
+    {
+        "field": "Amount of Allowance for Credit Losses",
+        "required": false,
+        "description": "For AFS securities, report the allowance for credit losses by the BHC or IHC on the security. For HTM securities, report the allowance for credit losses on the security if such information is available at security level. If only pool level information is available, report this field as: pool-level amount of allowance for credit losses * (the security\u2019s amortized cost) / (total amortized cost in the pool).",
+        "constraint_type": "range",
+        "allowed_values": {
+            "min": 0,
+            "max": null
+        },
+        "severity": "medium",
+        "dependencies": [],
+        "source": "For AFS securities, report the allowance for credit losses by the BHC or IHC on the security."
+    },
+    {
+        "field": "Writeoffs",
+        "required": false,
+        "description": "Report any writeoffs of this security during the quarter on a quarter-to-date basis.",
+        "constraint_type": "range",
+        "allowed_values": {
+            "min": 0,
+            "max": null
+        },
+        "severity": "medium",
+        "dependencies": [],
+        "source": "Report any writeoffs of this security during the quarter on a quarter-to-date basis."
+    },
+    {
+        "field": "Accounting Intent",
+        "required": true,
+        "description": "Indicate whether the security is available-for-sale (AFS) or held-to-maturity (HTM). For equity securities with readily determinable fair values not held for trading, report \u201cEQ\u201d in this field.",
+        "constraint_type": "value",
+        "allowed_values": [
+            "AFS",
+            "HTM",
+            "EQ"
+        ],
+        "severity": "critical",
+        "dependencies": [],
+        "source": "Indicate whether the security is available-for-sale (AFS) or held-to-maturity (HTM)."
+    },
+    {
+        "field": "Price",
+        "required": true,
+        "description": "Report the price of the security associated with the reported market value in USD. For equity securities, report the price per share.",
+        "constraint_type": "range",
+        "allowed_values": {
+            "min": 0,
+            "max": null
+        },
+        "severity": "critical",
+        "dependencies": [],
+        "source": "Report the price of the security associated with the reported market value in USD."
+    },
+    {
+        "field": "Pricing Date",
+        "required": true,
+        "description": "Report the pricing date of the security. Format: MM/DD/YYYY",
+        "constraint_type": "format",
+        "allowed_values": "^\\d{2}/\\d{2}/\\d{4}$",
+        "severity": "critical",
+        "dependencies": [],
+        "source": "Report the pricing date of the security."
+    },
+    {
+        "field": "Book yield",
+        "required": false,
+        "description": "Report the effective interest rate that would be used to determine credit losses on debt instruments. This item is not required for equity and mutual fund securities.",
+        "constraint_type": "range",
+        "allowed_values": {
+            "min": 0,
+            "max": null
+        },
+        "severity": "medium",
+        "dependencies": [],
+        "source": "Report the effective interest rate that would be used to determine credit losses on debt instruments."
+    },
+    {
+        "field": "Purchase Date",
+        "required": false,
+        "description": "Report the date on which the security was purchased or acquired. Exclude for equity and mutual fund securities. Format: MM/DD/YYYY",
+        "constraint_type": "format",
+        "allowed_values": "^\\d{2}/\\d{2}/\\d{4}$",
+        "severity": "medium",
+        "dependencies": [],
+        "source": "Report the date on which the security was purchased or acquired in the case of credit sensitive securities that are evaluated for other-than-temporary impairment (OTTI) purposes"
+    },
+    {
+        "field": "Currency",
+        "required": true,
+        "description": "Indicate the currency denomination of contractual payments on the security, using the standard ISO 4217 three-letter currency code (e.g., USD, EUR, GBP, CAD, etc.).",
+        "constraint_type": "format",
+        "allowed_values": "^[A-Z]{3}$",
+        "severity": "critical",
+        "dependencies": [],
+        "source": "Indicate the currency denomination of contractual payments on the security, or for an equity security, the currency in which it trades in its principal exchange, using the standard ISO 4217 three-letter currency code"
+    }
+]

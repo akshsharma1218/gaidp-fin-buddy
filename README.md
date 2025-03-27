@@ -17,36 +17,32 @@
 ---
 
 ## 🎯 Introduction
-GAIDP Fin Buddy is a financial assistant application designed to help users manage their personal finances effectively. It addresses the problem of financial illiteracy and provides tools for budgeting, expense tracking, and financial goal setting.
+GAIDP Fin Buddy is a financial assistant application designed to help businesses and individuals stay compliant with regulatory guidelines. It enables users to create data profiling rules from regulatory documents and apply these rules to transactional data for compliance analysis, risk scoring, and remediation.
 
 ## 🎥 Demo
-🔗 [Live Demo](https://example.com)  
-📹 [Video Demo](https://example.com/video-demo)  
-🖼️ Screenshots:
-
-![Screenshot 1](https://example.com/screenshot1.png)
+🔗 [Live Demo](http://localhost:5000/)  
+📹 [Video Demo](.artifacts/demo/fin-buddy-demo - Made with Clipchamp.mp4)  
 
 ## 💡 Inspiration
-The inspiration for GAIDP Fin Buddy came from the need to simplify personal finance management for individuals who struggle with budgeting and financial planning. We aim to empower users to make informed financial decisions.
+The inspiration for GAIDP Fin Buddy came from the need to help businesses and individuals stay compliant with regulatory guidelines. Understanding and mitigating risks associated with regulatory compliance can be challenging, and this application aims to simplify the process by providing actionable insights and automated analysis.
 
 ## ⚙️ What It Does
-- Generates insightful reports and analytics
-- **Analyzes financial transactions based on regulatory schedules**  
-  - Accepts a guideline PDF, transaction data (CSV format), and a schedule name as input.
-  - Extracts data profile rules from the specified schedule in the PDF.
-  - Executes these rules on the transaction data to identify remediation risks, violations, anomalies, etc.
-  - Generates a detailed report that can be downloaded from the UI.
+- **Creates Profile Rules**: Extracts data profiling rules from user-provided regulatory documents (e.g., PDFs).
+- **Analyzes Transactions**: Validates transactional data against the extracted rules to identify compliance violations, anomalies, and risks.
+- **Generates Reports**: Produces detailed reports with actionable insights to help users address compliance issues.
+- **Ensures Regulatory Compliance**: Helps businesses and individuals adhere to regulatory guidelines efficiently.
 
 ## 🛠️ How We Built It
-- Frontend: HTML/CSS/JS for a responsive and user-friendly interface
-- Backend: FastAPI for robust and scalable APIs
-- Database: File System for secure and efficient data storage
-- Other: OpenAI API and unsuprevised ML model
+- **AI Integration**: Leveraged Google Generative AI for extracting complex rules from regulatory documents.
+- **Backend Logic**: Developed custom logic in Python to process and validate transactional data.
+- **Server**: Deployed the application on a FastAPI server for robust and scalable API handling.
+- **Data Processing**: Used libraries like `pandas` and `pdfplumber` for data manipulation and PDF parsing.
 
 ## 🚧 Challenges We Faced
-- Integrating real-time bank account data securely
-- Ensuring data privacy and compliance with financial regulations
-- Designing an intuitive user interface for non-technical users
+- **Limited Free API Usage**: The free tier of Google Generative AI APIs restricted the number of requests we could make, requiring careful optimization.
+- **Computational Resources**: Lack of sufficient computational resources posed challenges in processing large datasets efficiently.
+- **Dataset Creation**: Had to create our own datasets for testing and validation due to the unavailability of suitable public datasets.
+- **Process Optimization**: Integrated multiple APIs and optimized the workflow to ensure smooth and efficient processing.
 
 ## 🏃 How to Run
 1. Clone the repository  
@@ -102,7 +98,7 @@ The solution consists of the following components:
 
 ## 📝 Example Use Case
 1. A business uploads a regulatory document (e.g., "Guidelines for Securities") and a CSV file containing transaction data.
-2. The system extracts rules from the "Securities" schedule in the document.
+2. The system extracts rules from the "B—Securities" schedule in the document. (The name should exactly match any section/schedule from the guideline/instructions pdf index.)
 3. The uploaded transactions are analyzed against these rules.
 4. The system identifies violations (e.g., missing fields, invalid values) and assigns risk scores.
 5. A detailed report is generated, highlighting issues and providing remediation suggestions.
