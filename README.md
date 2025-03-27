@@ -98,7 +98,7 @@ The solution consists of the following components:
 
 ## 📝 Example Use Case
 1. A business uploads a regulatory document (e.g., "Guidelines for Securities") and a CSV file containing transaction data.
-2. The system extracts rules from the "Securities" schedule in the document.
+2. The system extracts rules from the "B—Securities" schedule in the document. (The name should exactly match any section/schedule from the guideline/instructions pdf index.)
 3. The uploaded transactions are analyzed against these rules.
 4. The system identifies violations (e.g., missing fields, invalid values) and assigns risk scores.
 5. A detailed report is generated, highlighting issues and providing remediation suggestions.
